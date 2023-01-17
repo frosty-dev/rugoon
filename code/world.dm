@@ -89,7 +89,7 @@ var/global/mob/twitch_mob = 0
 	join_motd = grabResource("html/motd.html")
 
 /world/proc/load_rules()
-	rules = {"<meta http-equiv="refresh" content="0; url=http://wiki.ss13.co/Rules">"}
+	rules = {"<meta http-equiv="refresh" content="0; url=https://wiki.station13.ru/Rules">"}
 
 
 // dsingh for faster create panel loads

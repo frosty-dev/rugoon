@@ -57,7 +57,7 @@
 			set name = "github"
 			set desc = "Opens the github in your browser"
 			set hidden = 1
-			src << link("https://github.com/goonstation/goonstation")
+			src << link("https://github.com/frosty-dev/rugoon")
 
 		wiki()
 			set category = "Commands"
@@ -76,12 +76,13 @@
 			else
 				src << link("http://goonhub.com/maps/cogmap")
 
-		forum()
+	/*	forum()
 			set category = "Commands"
 			set name = "Forum"
 			set desc = "Open the Forum in your browser"
 			set hidden = 1
 			src << link("https://forum.ss13.co")
+	*/
 
 	proc
 		set_macro(name)
