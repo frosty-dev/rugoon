@@ -1018,27 +1018,28 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	return output_text
 
 /proc/stutter(n)
-	var/te = html_decode(n)
+	var/list/soglasnie = list(
+		"б","в","г","д","ж","з","к","л","м","н","п","р","с","т","ф","х","ц","ч","ш","щ",
+		"Б","В","Г","Д","Ж","З","К","Л","М","Н","П","Р","С","Т","Ф","Х","Ц","Ч","Ш","Щ",
+		"b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z",
+		"B","C","D","F","G","H","J","K","L","M","N","P","Q","R","S","T","V","W","X","Y","Z"
+	)
 	var/t = ""
-	n = length(n)
-	var/p = null
-	p = 1
-	while(p <= n)
-		var/n_letter = copytext(te, p, p + 1)
-		if (prob(80))
+	for(var/i = 1, i <= length(text), i++)
+		var/a = text2ascii(text, i)
+		if (prob(80) && (ascii2text(a) in soglasnie))
 			if (prob(10))
-				n_letter = text("[n_letter][n_letter][n_letter][n_letter]")
+				t += text("[ascii2text(a)]-[ascii2text(a)]-[ascii2text(a)]-[ascii2text(a)]")
 			else
 				if (prob(20))
-					n_letter = text("[n_letter][n_letter][n_letter]")
+					t += text("[ascii2text(a)]-[ascii2text(a)]-[ascii2text(a)]")
 				else
 					if (prob(5))
-						n_letter = null
+						t += ""
 					else
-						n_letter = text("[n_letter][n_letter]")
-		t = text("[t][n_letter]")
-		p++
-	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+						t += text("[ascii2text(a)]-[ascii2text(a)]")
+		t += ascii2text(a)
+	return copytext_char(sanitize(replacetext_char(t, "�", "")),1,MAX_MESSAGE_LEN * length(ascii2text(text2ascii(t))))
 
 /proc/shake_camera(mob/M, duration, strength=1, delay=0.2)
 	SPAWN(1 DECI SECOND)
