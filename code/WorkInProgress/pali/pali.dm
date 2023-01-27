@@ -294,9 +294,7 @@
 	New()
 		. = ..()
 		access = new /obj/item/implant/access(src)
-		access.owner = src
 		access.uses = -1
-		access.implanted = 1
 
 	bump(atom/movable/AM, yes = 1)
 		. = ..()
@@ -478,6 +476,20 @@
 
 
 
+
+
+proc/get_upscaled_icon(icon, icon_state, dx, dy)
+	var/list/static/upscaled_icon_cache = null
+	if(isnull(upscaled_icon_cache))
+		upscaled_icon_cache = list()
+	var/key = "[icon] [icon_state] [dx] [dy]"
+	if(upscaled_icon_cache[key])
+		return upscaled_icon_cache[key]
+	var/icon/ic = icon(icon, icon_state)
+	ic.Crop(world.icon_size / 2 * dx + 1, world.icon_size / 2 * dy + 1, world.icon_size / 2 * (dx + 1), world.icon_size / 2 * (dy + 1))
+	ic.Scale(world.icon_size, world.icon_size)
+	upscaled_icon_cache[key] = ic
+	return ic
 
 #ifdef UPSCALED_MAP
 /turf/var/base_icon
