@@ -22,16 +22,33 @@
 	return copytext(text, length(text) - length(end) + 1, length(text) + 1) == end
 
 /proc/trim(text)
-	return trim_left(trim_right(text))
+	return trim_reduced(text)
 
-/proc/capitalize(var/t as text)
-	var/code = text2ascii(t,1)
+//Returns a string with reserved characters and spaces after the first and last letters removed
+//Like trim(), but very slightly faster. worth it for niche usecases
+/proc/trim_reduced(text)
+	var/starting_coord = 1
+	var/text_len = length(text)
+	for (var/i in 1 to text_len)
+		if (text2ascii(text, i) > 32)
+			starting_coord = i
+			break
 
-	// Check if it isn't between a-z before uppertexting it
-	if (code < 97 || code > 122)
-		return t
+	for (var/i = text_len, i >= starting_coord, i--)
+		if (text2ascii(text, i) > 32)
+			return copytext(text, starting_coord, i + 1)
 
-	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
+	if(starting_coord > 1)
+		return copytext(text, starting_coord)
+	return ""
+
+/proc/capitalize(t)
+	. = t
+	if(isatom(t))
+		var/atom/A = t
+		t = A.name
+	. = copytext_char(t, 1, 2)
+	return uppertext(.) + copytext_char(t, 2)
 
 /// Returns true if the given string has a vowel
 /proc/isVowel(var/t as text)

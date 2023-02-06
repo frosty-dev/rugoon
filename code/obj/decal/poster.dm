@@ -726,7 +726,7 @@
 				. = ..()
 				switch(src.icon_state)
 					if("code")
-						user << link("https://github.com/goonstation/goonstation")
+						user << link("https://github.com/frosty-dev/rugoon")
 					if("edit_wiki")
 						user << link("https://wiki.ss13.co/")
 

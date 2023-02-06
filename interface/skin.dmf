@@ -971,7 +971,7 @@ window "rpane"
 		command = "enable_menu"
 	elem "mapb"
 		type = BUTTON
-		pos = 315,5
+		pos = 380,5
 		size = 60x20
 		anchor1 = 100,0
 		anchor2 = none
@@ -981,7 +981,7 @@ window "rpane"
 		group = "rpaneutil"
 	elem "wikib"
 		type = BUTTON
-		pos = 380,5
+		pos = 445,5
 		size = 60x20
 		anchor1 = 100,0
 		anchor2 = none
@@ -991,23 +991,13 @@ window "rpane"
 		group = "rpaneutil"
 	elem "githubb"
 		type = BUTTON
-		pos = 445,5
+		pos = 510,5
 		size = 60x20
 		anchor1 = 100,0
 		anchor2 = none
 		saved-params = "is-checked"
 		text = "GitHub"
 		command = "github"
-		group = "rpaneutil"
-	elem "forumb"
-		type = BUTTON
-		pos = 510,5
-		size = 60x20
-		anchor1 = 100,0
-		anchor2 = none
-		saved-params = "is-checked"
-		text = "Forum"
-		command = "forum"
 		group = "rpaneutil"
 	elem "bugreportb"
 		type = BUTTON
