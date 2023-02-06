@@ -10,6 +10,7 @@
 #define STRIP_ANTAG 1
 
 var/global/noir = 0
+var/global/call_reason = "" //щиткод
 
 ////////////////////////////////
 /proc/message_admins(var/text, var/asay = 0, var/irc = 0)
@@ -344,7 +345,7 @@ var/global/noir = 0
 					if("1")
 						if ((!( ticker ) || emergency_shuttle.location))
 							return
-						var/call_reason = input("Enter the reason for the shuttle call (or just hit OK to give no reason)","Shuttle Call Reason","No reason given.") as null|text
+						call_reason = input("Enter the reason for the shuttle call (or just hit OK to give no reason)","Shuttle Call Reason","No reason given.") as null|text
 						if(!call_reason)
 							return
 						if (emergency_shuttle.incall())
