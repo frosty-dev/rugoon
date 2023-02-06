@@ -341,7 +341,7 @@ datum/shuttle_controller
 								O.ReplaceWith(centcom_turf, keep_old_material = 0, force=1)
 						boutput(world, "<BR><B>The Emergency Shuttle has arrived at CentCom!")
 						logTheThing(LOG_STATION, null, "The emergency shuttle has arrived at Centcom.")
-						webhook_send_roundstatus("The emergency shuttle has arrived at Centcom")
+						webhook_send_roundstatus("shuttle escaped")
 						online = 0
 						return 1
 				else
