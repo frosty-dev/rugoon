@@ -18,10 +18,6 @@
 	var/list/query = list("ckey" = ckey, "message" = message)
 	webhook_send("memessage", query)
 
-/proc/webhook_send_token(ckey, token)
-	var/list/query = list("ckey" = ckey, "token" = token)
-	webhook_send("token", query)
-
 /proc/webhook_send_status_update(event, data)
 	var/list/query = list("event" = event, "data" = data)
 	webhook_send("status_update", query)
