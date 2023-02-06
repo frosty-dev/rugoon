@@ -96,6 +96,7 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 	remove_emote_typing_indicator()
 	if(message)
 		say_verb("*customv [message]")
+		webhook_send_me(src.key, message)
 
 /mob/verb/me_wrapper(message as text)
 	set name = ".Me"
@@ -105,6 +106,7 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 	remove_typing_indicator()
 	if(message)
 		me_verb(message)
+		webhook_send_me(src.key, message)
 
 // -- Human Typing Indicators -- //
 /mob/living/create_typing_indicator()

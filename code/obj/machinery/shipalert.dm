@@ -6,6 +6,7 @@
 //Using this definition and global system in antipation of further extension onto this ship alert feature
 var/global/shipAlertState = SHIP_ALERT_GOOD
 var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_quiet.ogg')
+var/global/alertWord = "green" // щиткод
 
 TYPEINFO(/obj/machinery/shipalert)
 	mats = 0
@@ -116,7 +117,7 @@ TYPEINFO(/obj/machinery/shipalert)
 		lastActivated = world.time
 
 	//alertWord stuff would go in a dedicated proc for extension
-	var/alertWord = "green"
+	//var/alertWord = "green" //щиткод
 	if (shipAlertState == SHIP_ALERT_BAD) alertWord = "red"
 
 	logTheThing(LOG_STATION, user, "toggled the ship alert to \"[alertWord]\"")
