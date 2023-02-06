@@ -35,7 +35,7 @@ datum/shuttle_controller
 			online = 1
 
 		INVOKE_ASYNC(ircbot, /datum/ircbot.proc/event, "shuttlecall", src.timeleft())
-		webhook_send_roundstatus("The Emergency Shuttle Has Been called", list("reason" = call_reason, "seclevel" = alertWord))
+		webhook_send_roundstatus("shuttle called", list("reason" = call_reason, "seclevel" = alertWord))
 
 		return TRUE
 
@@ -44,7 +44,7 @@ datum/shuttle_controller
 			playsound_global(world, 'sound/misc/shuttle_recalled.ogg', 100)
 			setdirection(-1)
 			ircbot.event("shuttlerecall", src.timeleft())
-			webhook_send_roundstatus("The Emergency Shuttle Has Been recalled")
+			webhook_send_roundstatus("shuttle recalled")
 
 
 	// returns the time (in seconds) before shuttle arrival
@@ -181,7 +181,7 @@ datum/shuttle_controller
 						boutput(world, "<B>The Emergency Shuttle has docked with the station! You have [timeleft()/60] minutes to board the Emergency Shuttle.</B>")
 						ircbot.event("shuttledock")
 						playsound_global(world, 'sound/misc/shuttle_arrive1.ogg', 100)
-						webhook_send_roundstatus("The Emergency Shuttle has docked with the station")
+						webhook_send_roundstatus("shuttle docked")
 
 						processScheduler.enableProcess("Fluid_Turfs")
 
@@ -286,7 +286,7 @@ datum/shuttle_controller
 						boutput(world, "<B>The Emergency Shuttle has left for CentCom! It will arrive in [timeleft()/60] minute[s_es(timeleft()/60)]!</B>")
 						playsound_global(world, 'sound/misc/shuttle_enroute.ogg', 100)
 						//online = 0
-						webhook_send_roundstatus("The Emergency Shuttle has left [station_name]")
+						webhook_send_roundstatus("shuttle left")
 
 						return 1
 
@@ -318,7 +318,7 @@ datum/shuttle_controller
 						boutput(world, "<BR><B>The Emergency Shuttle has arrived at CentCom!")
 						playsound_global(world, 'sound/misc/shuttle_centcom.ogg', 100)
 						logTheThing(LOG_STATION, null, "The emergency shuttle has arrived at Centcom.")
-						webhook_send_roundstatus("The emergency shuttle has arrived at Centcom")
+						webhook_send_roundstatus("shuttle escaped")
 						online = 0
 
 						location = SHUTTLE_LOC_RETURNED

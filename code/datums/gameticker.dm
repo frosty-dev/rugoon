@@ -31,7 +31,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	pregame_timeleft = PREGAME_LOBBY_TICKS
 	boutput(world, "<b>Welcome to the pre-game lobby!</b><br>Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds.")
-	webhook_send_roundstatus("Lobby")
+	webhook_send_roundstatus("lobby")
 
 	// let's try doing this here, yoloooo
 	// zamu 20200823: idk if this is even getting called...
@@ -144,8 +144,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		SPAWN(0) pregame()
 
-		webhook_send_roundstatus("Pre-game")
-
 		return 0
 
 	logTheThing(LOG_DEBUG, null, "Chosen game mode: [mode] ([master_mode]) on map [getMapNameFromID(map_setting)].")
@@ -214,7 +212,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	current_state = GAME_STATE_PLAYING
 	round_time_check = world.timeofday
-	webhook_send_roundstatus("Playing")
+	webhook_send_roundstatus("ingame")
 
 	SPAWN(0)
 		ircbot.event("roundstart")
@@ -430,7 +428,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		if(mode.check_finished())
 			current_state = GAME_STATE_FINISHED
-			webhook_send_roundstatus("Finished")
+			webhook_send_roundstatus("ending")
 			// This does a little more than just declare - it handles all end of round processing
 			//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] Starting declare_completion.")
 			try

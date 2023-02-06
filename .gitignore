@@ -74,5 +74,3 @@ Desktop.ini
 
 # Dedicated unversioned folder
 /unversioned/**/*
-
-/+secret/*
