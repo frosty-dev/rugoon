@@ -871,7 +871,9 @@ TYPEINFO(/datum/mutantrace)
 	say_filter(var/message)
 		var/replace_lowercase = replacetextEx(message, "s", stutter("ss"))
 		var/replace_uppercase = replacetextEx(replace_lowercase, "S", stutter("SS"))
-		return replace_uppercase
+		var/replace_lowercase_ru = replacetextEx(replace_uppercase, "с", stutter("сс"))
+		var/replace_uppercase_ru = replacetextEx(replace_lowercase_ru, "С", stutter("СС"))
+		return replace_uppercase_ru
 
 	disposing()
 		if(ishuman(src.mob))
@@ -2127,7 +2129,9 @@ TYPEINFO(/datum/mutantrace)
 		.= replacetext(message, "cow", "human")
 		var/replace_lowercase = replacetextEx(., "m", stutter("mm"))
 		var/replace_uppercase = replacetextEx(replace_lowercase, "M", stutter("MM"))
-		return replace_uppercase
+		var/replace_lowercase_ru = replacetextEx(replace_uppercase, "м", stutter("мм"))
+		var/replace_uppercase_ru = replacetextEx(replace_lowercase_ru, "М", stutter("ММ"))
+		return replace_uppercase_ru
 
 	emote(var/act, var/voluntary)
 		switch(act)

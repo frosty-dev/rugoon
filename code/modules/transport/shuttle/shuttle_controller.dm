@@ -39,6 +39,7 @@ datum/shuttle_controller
 
 		shuttle_status = "Called"
 		INVOKE_ASYNC(ircbot, /datum/ircbot.proc/event, "shuttlecall", src.timeleft())
+		webhook_send_roundstatus("shuttle called", list("reason" = call_reason, "seclevel" = alertWord))
 
 		return TRUE
 
