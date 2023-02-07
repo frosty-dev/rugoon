@@ -1,6 +1,9 @@
 // Controls the emergency shuttle
 var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
+//RUGOON
+var/shuttle_status = "Idle"
+
 datum/shuttle_controller
 	var/location = 0 //0 = somewhere far away, 1 = at SS13, 2 = returned from SS13
 	var/online = 0
@@ -34,6 +37,7 @@ datum/shuttle_controller
 			settimeleft(SHUTTLEARRIVETIME)
 			online = 1
 
+		shuttle_status = "Called"
 		INVOKE_ASYNC(ircbot, /datum/ircbot.proc/event, "shuttlecall", src.timeleft())
 		webhook_send_roundstatus("shuttle called", list("reason" = call_reason, "seclevel" = alertWord))
 
@@ -44,6 +48,7 @@ datum/shuttle_controller
 			playsound_global(world, 'sound/misc/shuttle_recalled.ogg', 100)
 			setdirection(-1)
 			ircbot.event("shuttlerecall", src.timeleft())
+			shuttle_status = "Idle"
 			webhook_send_roundstatus("shuttle recalled")
 
 
@@ -181,6 +186,7 @@ datum/shuttle_controller
 						boutput(world, "<B>The Emergency Shuttle has docked with the station! You have [timeleft()/60] minutes to board the Emergency Shuttle.</B>")
 						ircbot.event("shuttledock")
 						playsound_global(world, 'sound/misc/shuttle_arrive1.ogg', 100)
+						shuttle_status = "Arrived"
 						webhook_send_roundstatus("shuttle docked")
 
 						processScheduler.enableProcess("Fluid_Turfs")
@@ -286,6 +292,7 @@ datum/shuttle_controller
 						boutput(world, "<B>The Emergency Shuttle has left for CentCom! It will arrive in [timeleft()/60] minute[s_es(timeleft()/60)]!</B>")
 						playsound_global(world, 'sound/misc/shuttle_enroute.ogg', 100)
 						//online = 0
+						shuttle_status = "Escaping"
 						webhook_send_roundstatus("shuttle left")
 
 						return 1
@@ -318,6 +325,7 @@ datum/shuttle_controller
 						boutput(world, "<BR><B>The Emergency Shuttle has arrived at CentCom!")
 						playsound_global(world, 'sound/misc/shuttle_centcom.ogg', 100)
 						logTheThing(LOG_STATION, null, "The emergency shuttle has arrived at Centcom.")
+						shuttle_status = "Escaped"
 						webhook_send_roundstatus("shuttle escaped")
 						online = 0
 
@@ -341,6 +349,7 @@ datum/shuttle_controller
 								O.ReplaceWith(centcom_turf, keep_old_material = 0, force=1)
 						boutput(world, "<BR><B>The Emergency Shuttle has arrived at CentCom!")
 						logTheThing(LOG_STATION, null, "The emergency shuttle has arrived at Centcom.")
+						shuttle_status = "Escaped"
 						webhook_send_roundstatus("shuttle escaped")
 						online = 0
 						return 1
