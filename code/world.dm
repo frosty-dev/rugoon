@@ -883,6 +883,27 @@ var/f_color_selector_handler/F_Color_Selector
 			n++
 		s["players"] = n
 		s["map_name"] = getMapNameFromID(map_setting)
+
+		//RUGOON
+		s["sec_level"] = alertWord
+
+		var/shiftTime = round(ticker.round_elapsed_ticks / 600)
+		s["shift_time"] = "[shiftTime] minute[shiftTime == 1 ? "" : "s"]"
+
+		var/game_status
+		switch(current_state)
+			if(GAME_STATE_PREGAME, GAME_STATE_SETTING_UP)
+				game_status = "Lobby"
+			if(GAME_STATE_PLAYING)
+				game_status = "Playing"
+			if(GAME_STATE_FINISHED)
+				game_status = "Finished"
+			else
+				game_status = "Unknown"
+		s["game_status"] = game_status
+
+		s["shuttle_status"] = shuttle_status
+
 		return list2params(s)
 
 	else // Discord bot communication (or callbacks)
