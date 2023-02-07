@@ -113,6 +113,12 @@
 
 	var/already_loaded_once = FALSE
 
+	//RUGOON SHIT
+	var/webhook_key
+	var/webhook_address
+	var/webhook_address_invst
+	var/comms_key
+
 /datum/configuration/New()
 	..()
 	var/list/L = childrentypesof(/datum/game_mode)

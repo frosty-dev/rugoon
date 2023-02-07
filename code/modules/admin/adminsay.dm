@@ -26,6 +26,8 @@
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export_async("asay", ircmsg)
 
+	webhook_send_asay(src.key, msg)
+
 /client/proc/cmd_admin_forceallsay(msg as text)
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "forceallsay"
