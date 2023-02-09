@@ -1268,7 +1268,7 @@ var/f_color_selector_handler/F_Color_Selector
 						continue
 					boutput(C, rendered)
 
-				webhook_send_ooc(nick, msg)
+				webhook_send_ooc(nick, rendered)
 
 				var/ircmsg[] = new()
 				ircmsg["msg"] = msg
@@ -1297,7 +1297,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 				message_admins(rendered, 1, 1)
 
-				webhook_send_asay(nick, msg)
+				webhook_send_asay(nick, rendered)
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = nick
