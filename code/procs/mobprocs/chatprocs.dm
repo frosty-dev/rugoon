@@ -657,6 +657,8 @@
 
 		boutput(C, rendered)
 
+		webhook_send_ooc(src.key, msg)
+
 	logTheThing(LOG_OOC, src, "OOC: [msg]")
 
 /mob/proc/listen_looc()
