@@ -1268,6 +1268,8 @@ var/f_color_selector_handler/F_Color_Selector
 						continue
 					boutput(C, rendered)
 
+				webhook_send_ooc(nick, msg)
+
 				var/ircmsg[] = new()
 				ircmsg["msg"] = msg
 				return ircbot.response(ircmsg)
@@ -1294,6 +1296,8 @@ var/f_color_selector_handler/F_Color_Selector
 				var/rendered = "<span class=\"admin\"><span class=\"prefix\"></span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
 
 				message_admins(rendered, 1, 1)
+
+				webhook_send_asay(nick, msg)
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = nick
