@@ -888,7 +888,6 @@ var/f_color_selector_handler/F_Color_Selector
 		//RUGOON
 		s["sec_level"] = alertWord
 
-		var/shiftTime = round(ticker.round_elapsed_ticks / 600)
 		s["shift_time"] = "[shiftTime] minute[shiftTime == 1 ? "" : "s"]"
 
 		var/game_status
@@ -906,6 +905,17 @@ var/f_color_selector_handler/F_Color_Selector
 		s["shuttle_status"] = shuttle_status
 
 		return list2params(s)
+
+	else if (T == "ooc")
+		var/rendered = "<span class=\"adminooc\"><span class=\"prefix\">Discord -> OOC:</span> <span class=\"name\">["ckey"]:</span> <span class=\"message\">["ooc"]</span></span>"
+		for (var/client/C in clients)
+			if (C.preferences && !C.preferences.listen_ooc)
+				continue
+			boutput(C, rendered)
+
+	else if (T == "asay")
+		var/rendered = "<span class=\"admin\"><span class=\"prefix\">Discord -> ASAY:</span> <span class=\"name\">["admin"]:</span> <span class=\"message adminMsgWrap\">["asay"]</span></span>"
+		message_admins(rendered, 1)
 
 	else // Discord bot communication (or callbacks)
 
@@ -1268,8 +1278,6 @@ var/f_color_selector_handler/F_Color_Selector
 						continue
 					boutput(C, rendered)
 
-				webhook_send_ooc(nick, rendered)
-
 				var/ircmsg[] = new()
 				ircmsg["msg"] = msg
 				return ircbot.response(ircmsg)
@@ -1296,8 +1304,6 @@ var/f_color_selector_handler/F_Color_Selector
 				var/rendered = "<span class=\"admin\"><span class=\"prefix\"></span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
 
 				message_admins(rendered, 1, 1)
-
-				webhook_send_asay(nick, rendered)
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = nick

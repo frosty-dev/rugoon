@@ -20,13 +20,13 @@
 		special = "gfartadmin"
 	message_admins("[key_name(src)]: <span class=\"adminMsgWrap [special]\">[msg]</span>", 1)
 
+	webhook_send_asay(key_name(src), msg)
+
 	var/ircmsg[] = new()
 	ircmsg["key"] = src.key
 	ircmsg["name"] = stripTextMacros(src.mob.real_name)
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export_async("asay", ircmsg)
-
-	webhook_send_asay(src.key, msg)
 
 /client/proc/cmd_admin_forceallsay(msg as text)
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
