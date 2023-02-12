@@ -613,6 +613,8 @@
 	logTheThing(LOG_DIARY, src, ": [msg]", "ooc")
 	phrase_log.log_phrase("ooc", msg)
 
+	webhook_send_ooc(key_name(src), msg)
+
 #ifdef DATALOGGER
 	game_stats.ScanText(msg)
 #endif
@@ -655,7 +657,7 @@
 
 		boutput(C, rendered)
 
-	webhook_send_ooc(src.key, msg)
+		webhook_send_ooc(key_name(src), rendered)
 
 	logTheThing(LOG_OOC, src, "OOC: [msg]")
 

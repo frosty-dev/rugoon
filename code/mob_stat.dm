@@ -5,8 +5,6 @@
 
 #define saveStat(key, value) stats[key] = value
 
-var/global/shiftTime = round(ticker.round_elapsed_ticks / 600)
-
 /datum/mob_stat_thinker
 	var/last_update = 0
 	var/update_interval = 11
@@ -106,6 +104,7 @@ var/global/shiftTime = round(ticker.round_elapsed_ticks / 600)
 
 			else if (ticker.round_elapsed_ticks)
 				stats["Time To Start:"] = 0
+				var/shiftTime = round(ticker.round_elapsed_ticks / 600)
 				saveStat("Shift Time:", "[shiftTime] minute[shiftTime == 1 ? "" : "s"]")
 				saveStat("Local Time:", time2text(world.timeofday, "hh:mm"))
 
