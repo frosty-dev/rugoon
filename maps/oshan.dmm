@@ -31127,7 +31127,7 @@
 	dir = 1
 	},
 /obj/decal/tile_edge/floorguide/ai{
-	dir = s
+	dir = 3
 	},
 /obj/decal/tile_edge/floorguide/medbay{
 	dir = 8
