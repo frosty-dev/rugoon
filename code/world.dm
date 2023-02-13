@@ -838,6 +838,8 @@ var/f_color_selector_handler/F_Color_Selector
 	logDiary("TOPIC: \"[cleanT]\", from:[addr], master:[master], key:[key]")
 	Z_LOG_DEBUG("World", "TOPIC: \"[cleanT]\", from:[addr], master:[master], key:[key]")
 
+	var/input[] = params2list(T)
+
 	if (T == "ping")
 		var/x = 1
 		for (var/client/C)
@@ -906,6 +908,34 @@ var/f_color_selector_handler/F_Color_Selector
 		s["shuttle_status"] = shuttle_status
 
 		return list2params(s)
+
+	else if (T == "ooc")
+		var/ckey = input["ckey"]
+		var/msg = input["ooc"]
+
+		logTheThing(LOG_OOC, ckey, "OOC: [msg]")
+		logTheThing(LOG_DIARY, ckey, ": [msg]", "ooc")
+		var/rendered = "<span class=\"adminooc\"><span class=\"prefix\">Discord -> OOC:</span> <span class=\"name\">[ckey]:</span> <span class=\"message\">[msg]</span></span>"
+
+		for (var/client/C in clients)
+			if (C.preferences && !C.preferences.listen_ooc)
+				continue
+			boutput(C, rendered)
+
+	else if (T == "asay")
+		var/ckey = input["ckey"]
+		var/msg = input["ooc"]
+
+		if(!ckey||!msg)
+			return
+		if(!config.vars["ooc_allowed"]&&!input["isadmin"])
+			return "globally muted"
+
+		logTheThing(LOG_ADMIN, null, "Discord ASAY: [ckey]: [msg]")
+		logTheThing(LOG_DIARY, null, "Discord ASAY: [ckey]: [msg]", "admin")
+		var/rendered = "<span class=\"admin\"><span class=\"prefix\"></span> <span class=\"name\">[ckey]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
+
+		message_admins(rendered, 1)
 
 	else // Discord bot communication (or callbacks)
 
@@ -1268,8 +1298,6 @@ var/f_color_selector_handler/F_Color_Selector
 						continue
 					boutput(C, rendered)
 
-				webhook_send_ooc(nick, rendered)
-
 				var/ircmsg[] = new()
 				ircmsg["msg"] = msg
 				return ircbot.response(ircmsg)
@@ -1296,8 +1324,6 @@ var/f_color_selector_handler/F_Color_Selector
 				var/rendered = "<span class=\"admin\"><span class=\"prefix\"></span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
 
 				message_admins(rendered, 1, 1)
-
-				webhook_send_asay(nick, rendered)
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = nick
