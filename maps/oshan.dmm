@@ -10643,7 +10643,7 @@
 	},
 /obj/decal/tile_edge/floorguide/science,
 /obj/decal/tile_edge/floorguide/ai{
-	dir = s
+	dir = 3
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -14244,6 +14244,9 @@
 	dir = 4
 	},
 /obj/decal/tile_edge/floorguide/arrow_s,
+/obj/decal/tile_edge/floorguide/ai{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "aJN" = (
