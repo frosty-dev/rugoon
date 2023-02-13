@@ -913,6 +913,11 @@ var/f_color_selector_handler/F_Color_Selector
 		var/ckey = input["ckey"]
 		var/msg = input["ooc"]
 
+		if(!ckey||!msg)
+			return
+		if(!config.vars["ooc_allowed"]&&!input["isadmin"])
+			return "globally muted"
+
 		logTheThing(LOG_OOC, ckey, "OOC: [msg]")
 		logTheThing(LOG_DIARY, ckey, ": [msg]", "ooc")
 		var/rendered = "<span class=\"adminooc\"><span class=\"prefix\">Discord -> OOC:</span> <span class=\"name\">[ckey]:</span> <span class=\"message\">[msg]</span></span>"
@@ -925,11 +930,6 @@ var/f_color_selector_handler/F_Color_Selector
 	else if (T == "asay")
 		var/ckey = input["ckey"]
 		var/msg = input["ooc"]
-
-		if(!ckey||!msg)
-			return
-		if(!config.vars["ooc_allowed"]&&!input["isadmin"])
-			return "globally muted"
 
 		logTheThing(LOG_ADMIN, null, "Discord ASAY: [ckey]: [msg]")
 		logTheThing(LOG_DIARY, null, "Discord ASAY: [ckey]: [msg]", "admin")
