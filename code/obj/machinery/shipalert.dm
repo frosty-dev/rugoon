@@ -11,6 +11,9 @@ var/global/alertWord = "green" // щиткод
 TYPEINFO(/obj/machinery/shipalert)
 	mats = 0
 
+#define COMPLETE 0
+#define HAMMER_TAKEN 1
+#define SMASHED 2
 /obj/machinery/shipalert
 	name = "Ship Alert Button"
 	icon = 'icons/obj/monitors.dmi'
@@ -19,9 +22,8 @@ TYPEINFO(/obj/machinery/shipalert)
 	anchored = 1
 
 	var/usageState = 0 // 0 = glass cover, hammer. 1 = glass cover, no hammer. 2 = cover smashed
-	var/working = 0 //processing loops
-	var/lastActivated = 0
-	var/cooldownPeriod = 2000 //2 minutes, change according to player abuse
+	var/working = FALSE //processing loops
+	var/cooldownPeriod = 2 MINUTES //2 minutes, change according to player abuse
 
 	New()
 		..()
@@ -34,20 +36,21 @@ TYPEINFO(/obj/machinery/shipalert)
 	src.add_fingerprint(user)
 
 	switch (usageState)
-		if (0)
+		if (COMPLETE)
 			//take the hammer
 			if (issilicon(user)) return
 			var/obj/item/tinyhammer/hammer = new /obj/item/tinyhammer()
 			user.put_in_hand_or_drop(hammer)
-			src.usageState = 1
+			src.usageState = HAMMER_TAKEN
 			src.icon_state = "shipalert1"
 			user.visible_message("[user] picks up \the [hammer]", "You pick up \the [hammer]")
-		if (1)
+		if (HAMMER_TAKEN)
 			//no effect punch
 			out(user, "<span class='alert'>The glass casing is too strong for your puny hands!</span>")
-		if (2)
+		if (SMASHED)
 			//activate
-			if (src.working) return
+			if (src.working)
+				return
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			src.toggleActivate(user)
 
@@ -55,7 +58,7 @@ TYPEINFO(/obj/machinery/shipalert)
 	if (user.stat)
 		return
 
-	if (src.usageState == 1)
+	if (src.usageState == HAMMER_TAKEN)
 		if (istype(W, /obj/item/tinyhammer))
 			//break glass
 			var/area/T = get_turf(src)
@@ -63,7 +66,7 @@ TYPEINFO(/obj/machinery/shipalert)
 			playsound(T, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
 			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(get_turf(user))
-			src.usageState = 2
+			src.usageState = SMASHED
 			src.icon_state = "shipalert2"
 		else
 			//no effect
@@ -74,29 +77,26 @@ TYPEINFO(/obj/machinery/shipalert)
 		return
 
 	if (src.working)
-		out(user, "The alert coils are currently discharging, please be patient.")
+		out(user, "<span class='alert'>The alert coils are currently discharging, please be patient.</span>")
 		return
 
-	src.working = 1
+	src.working = TRUE
 
 	if (shipAlertState == SHIP_ALERT_BAD)
 		//centcom alert
-		command_alert("The emergency is over. Return to your regular duties.", "Alert - All Clear")
+		command_alert("The emergency is over. Return to your regular duties.", "Alert - All Clear", alert_origin = ALERT_STATION)
 
 		//toggle off
 		shipAlertState = SHIP_ALERT_GOOD
 
-		//update all lights
-		for (var/obj/machinery/light/L in stationLights)
-			L.power_change()
-			sleep(0.25)
+		src.update_lights()
 
-		lastActivated = world.time
+		ON_COOLDOWN(src, "alert_cooldown", src.cooldownPeriod)
 
 	else
-		if (src.lastActivated + src.cooldownPeriod > world.time)
-			out(user, "The alert coils are still priming themselves.")
-			src.working = 0
+		if (GET_COOLDOWN(src, "alert_cooldown"))
+			out(user, "<span class='alert'>The alert coils are still priming themselves.</span>")
+			src.working = FALSE
 			return
 
 		//alert and siren
@@ -109,20 +109,30 @@ TYPEINFO(/obj/machinery/shipalert)
 		//toggle on
 		shipAlertState = SHIP_ALERT_BAD
 
-		//update all lights
-		for (var/obj/machinery/light/L in stationLights)
-			L.power_change()
-			sleep(0.25)
-
-		lastActivated = world.time
+		src.update_lights()
 
 	//alertWord stuff would go in a dedicated proc for extension
+<<<<<<< HEAD
 	//var/alertWord = "green" //щиткод
 	if (shipAlertState == SHIP_ALERT_BAD) alertWord = "red"
+=======
+	var/alertWord = "green"
+	if (shipAlertState == SHIP_ALERT_BAD)
+		alertWord = "red"
+>>>>>>> ac15bf1ff0704ad337d44abb0d2be3fb4bf8140e
 
 	logTheThing(LOG_STATION, user, "toggled the ship alert to \"[alertWord]\"")
 	logTheThing(LOG_DIARY, user, "toggled the ship alert to \"[alertWord]\"", "station")
-	src.working = 0
+	src.working = FALSE
+
+/obj/machinery/shipalert/proc/update_lights()
+	for(var/obj/machinery/light/emergency/light in by_cat[TR_CAT_STATION_EMERGENCY_LIGHTS])
+		light.power_change()
+		LAGCHECK(LAG_LOW)
+
+#undef COMPLETE
+#undef HAMMER_TAKEN
+#undef SMASHED
 
 /obj/item/tinyhammer
 	name = "teeny tiny hammer"
