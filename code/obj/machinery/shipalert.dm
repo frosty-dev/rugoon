@@ -112,14 +112,9 @@ TYPEINFO(/obj/machinery/shipalert)
 		src.update_lights()
 
 	//alertWord stuff would go in a dedicated proc for extension
-<<<<<<< HEAD
-	//var/alertWord = "green" //щиткод
-	if (shipAlertState == SHIP_ALERT_BAD) alertWord = "red"
-=======
 	var/alertWord = "green"
 	if (shipAlertState == SHIP_ALERT_BAD)
 		alertWord = "red"
->>>>>>> ac15bf1ff0704ad337d44abb0d2be3fb4bf8140e
 
 	logTheThing(LOG_STATION, user, "toggled the ship alert to \"[alertWord]\"")
 	logTheThing(LOG_DIARY, user, "toggled the ship alert to \"[alertWord]\"", "station")
