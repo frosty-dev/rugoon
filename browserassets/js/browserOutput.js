@@ -894,7 +894,7 @@ $(function() {
         } else {
             xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
         }
-        xmlHttp.open('GET', 'https://cdn.goonhub.com/css/browserOutput.css', false);
+        xmlHttp.open('GET', 'https://assets.station13.ru/goon/css/browserOutput.css', false);
         xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xmlHttp.send();
         saved += '<style>'+xmlHttp.responseText+'</style>';

@@ -28,7 +28,7 @@ module.exports = function (grunt) {
   rev = rev.replace(/(\r\n|\n|\r)/gm, '');
 	var serverType = grunt.option('servertype') || '';
 	if (serverType === 'main') serverType = '';
-  var cdn = 'https://cdn'+serverType+'.goonhub.com';
+  var cdn = 'https://assets.station13.ru/goon';
 
   // Define the configuration for all the tasks
   grunt.initConfig({
