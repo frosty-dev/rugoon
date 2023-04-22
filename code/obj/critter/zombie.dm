@@ -30,7 +30,7 @@
 		playsound(src.loc, pick('sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg'), 25, 0)*/
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iszombie(C)) continue // For admin gimmicks mixing player zombies and critters
@@ -289,7 +289,7 @@
 
 		harmless_smoke_puff(src.loc)
 
-		new /obj/critter/aberration(src.loc)
+		new /mob/living/critter/aberration(src.loc)
 		new /obj/item/clothing/suit/bio_suit(src.loc)
 		new /obj/item/clothing/gloves/latex(src.loc)
 		new /obj/item/clothing/head/bio_hood(src.loc)

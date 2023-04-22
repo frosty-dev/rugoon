@@ -11,7 +11,7 @@
 	density = 0
 	canmove = 1
 	blinded = 0
-	anchored = 1
+	anchored = ANCHORED
 	use_stamina = 0//no puff tomfuckery
 	respect_view_tint_settings = TRUE
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
@@ -158,6 +158,7 @@
 /mob/living/intangible/flock/proc/select_drone(mob/living/critter/flock/drone/drone)
 	var/datum/abilityHolder/flockmind/holder = src.abilityHolder
 	holder.drone_controller.drone = drone
+	drone.selected_by = src
 	drone.AddComponent(/datum/component/flock_ping/selected)
 	src.targeting_ability = holder.drone_controller
 	src.update_cursor()
@@ -183,7 +184,6 @@
 			if (flockdrone.selected_by || flockdrone.controller)
 				boutput(src, "<span class='alert'>This drone is receiving a command!</span>")
 				return
-			flockdrone.selected_by = src
 			src.select_drone(flockdrone)
 			return
 	//moved from flock_structure_ghost for interfering with ability targeting

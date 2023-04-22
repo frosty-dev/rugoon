@@ -180,6 +180,7 @@
 			K.set_current_projectile(ammoGun.ammo_type)
 			if(K.silenced)
 				K.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
+				K.current_projectile.shot_sound_extrarange = -10
 			K.UpdateIcon()
 
 			return 1
@@ -232,6 +233,7 @@
 				K.set_current_projectile(A.ammo_type)
 				if(K.silenced)
 					K.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
+					K.current_projectile.shot_sound_extrarange = -10
 
 				//DEBUG_MESSAGE("Equalized [K]'s ammo type to [A.type]")
 
@@ -970,6 +972,20 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "40mm plastic baton rounds"
 	desc = "Some mean-looking plastic projectiles. Keep in mind non-lethal doesn't mean non-maiming."
 	ammo_type = new/datum/projectile/bullet/pbr
+	amount_left = 2
+	max_amount = 2
+	icon_state = "40mm_nonlethal"
+	ammo_cat = AMMO_GRENADE_40MM
+	w_class = W_CLASS_NORMAL
+	icon_dynamic = 0
+	icon_empty = "40mm_nonlethal-0"
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
+
+/obj/item/ammo/bullets/stunbaton
+	sname = "40mm Stun Baton Rounds"
+	name = "40mm plastic baton rounds"
+	desc = "A box of disposable stun batons shoved into 40mm grenade shells. What the hell?"
+	ammo_type = new/datum/projectile/bullet/stunbaton
 	amount_left = 2
 	max_amount = 2
 	icon_state = "40mm_nonlethal"

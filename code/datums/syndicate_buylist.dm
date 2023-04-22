@@ -485,7 +485,7 @@ This is basically useless for anyone but miners.
 	item = /obj/vehicle/clowncar/surplus
 	cost = 5
 	vr_allowed = 0
-	desc = "A funny-looking car designed for circus events. Seats 30, very roomy! Comes with an extra set of clown clothes."
+	desc = "A funny-looking car designed for circus events. Seats 30, very roomy! Can be loaded with banana peels. Comes with an extra set of clown clothes."
 	job = list("Clown")
 	can_buy = UPLINK_TRAITOR | UPLINK_HEAD_REV | UPLINK_SPY_THIEF
 
@@ -900,7 +900,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/cargotele/traitor
 	cost = 3
 	vr_allowed = 0
-	desc = "A modified cargo transporter which teleports containers to a random spot in space and welds them shut."
+	desc = "A modified cargo transporter which welds containers shut and sells their contents directly to the black market, swipe your ID to set the account. Any hapless crewmembers sold will be teleported to a random point in space and will reward cash bonuses based on their job."
 	job = list("Quartermaster","Miner","Engineer","Chief Engineer")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -970,7 +970,7 @@ This is basically useless for anyone but miners.
 /datum/syndicate_buylist/traitor/scuttlebot
 	name = "Controlled Syndicate Scuttlebot"
 	item = /obj/item/clothing/head/det_hat/folded_scuttlebot
-	cost = 2
+	cost = 4
 	vr_allowed = 0
 	desc = "A sneaky robot armed with a camera disguised as a hat, used to spy on people. Comes with it's own remote controlling glasses. Can lift small items and has a disabling flash."
 	job = list("Detective")
